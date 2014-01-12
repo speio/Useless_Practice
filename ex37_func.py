@@ -1,18 +1,30 @@
 # Symbol Review
 
-
+print ""
+print ""
 print "This will print out a 'plain english' definition for all"
 print "keywords, data types, string escape sequences, string formats,"
-print " and operators of the Python language"
+print "and operators of the Python language"
 print ""
 print ""
-print "Sections: \n Keywords \n Data types \n String escape sequences"
-print " String formats \n Operators"
 
 
-
+def def_keywords(word):
+		if word == 'and':
+			print "andstuff"
+	
+		elif word == 'del':
+			print "delstuff"
+		
+		elif word == 'from':
+			print "fromstuff"
+	
+		else:
+			print "Sorry that keyword doesn't seem to exist in the list"
+			print "Likely because there are lots of keywords and"
+			print "I didn't want to, define them all."
+			
 def keywords():  
-		print section #error check
 		#will use this variable later to ask to input new keyword in same section		
 		cont = 'y' 
 		
@@ -31,11 +43,11 @@ def keywords():
 				print "def        for       lambda       try"
 		
 			elif list_bool == False:
-				print "elif Keywords reached"
-				break
-	
+				def_keywords(see_list)
+				
+				cont = raw_input("Input a new keyword?(y/n) \n > ")
+				
 def escapes():
-		print section
 		cont = 'y'
 		while cont == 'y':
 			print "Press enter to see all String Escape Sequences choices,"
@@ -55,7 +67,6 @@ def escapes():
 				break
 				
 def data_types():
-	print section
 	cont = 'y'
 	while cont == 'y':
 		print "Press enter to see all data types, or type a data type"
@@ -79,17 +90,18 @@ restart = 'y'
 #Starts while loop to allow continuation with new sections if desired
 #Based on variable restart
 while restart == 'y':
-	print section
+	print "Sections: \n Keywords \n Data types \n String escape sequences"
+	print " String formats \n Operators"
 	#taking user input to decide which section to enter
 	section = raw_input("Which section would you like definitions from? \n > ")
 	
-	if 'keywords' in section and section != 'none':
+	if 'keywords' in section:
 		keywords()			
 	
-	elif 'data' or 'types' in section and section != 'none':
+	elif 'data' in section or 'types' in section:
 		data_types()
 		
-	elif 'string' or 'escape' in section and section != 'none':
+	elif 'string' in section or 'escape' in section:
 		escapes()
 		
 	else:

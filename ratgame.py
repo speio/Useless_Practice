@@ -1,9 +1,55 @@
+import time
 #The game of the Rat
 print "     The \n Game of the \n     Rat"
 raw_input("Press enter to continue")
 print "Choose your character:"
-raw_input()
+time.sleep(1)
 
+
+def dead(reason):
+	if reason == "poison":
+		print "You a dead rat."
+				
+		print "You're allergic to peanut butter. How could you not remember?"
+		
+		print  	"""
+                (' - ')
+           >>>---  X X`.-->
+              .'     ___O      
+             /   .-.' \\
+            J    |`.\\  \\
+            | |_.|  | | |
+             \\__.'`.|-' /
+             L      `--'\\
+             |           | 
+             J           \\                              
+             \\         /  \\
+              \\      .'`.  `.                                            .'
+             ___) /\ (___`.  `-._______________________________________.'/
+           _///__/__\___\\\\_`-.________________________________________.-'
+		"""
+		exit(0)
+
+	elif reason == "fire":
+		print """
+			
+				 (  .      )
+			   )           (              )
+					 .  '   .   '  .  '  .
+			(    , )       (.   )  (   ',    )
+			 .' ) ( . )    ,  ( ,     )   ( .
+		  ). , ( .   (  ) ( , ')  .' (  ,    )
+		 (_,) . ), ) _) _,')  (, ) ', )  ,. (' 
+		 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+			
+			
+				"""		
+		print "Everything burned and you died"
+		exit(0)
+
+	else:
+		exit(0)
+	
 #Drawing character choices
 print "Elfred Ratskill"
 
@@ -15,7 +61,7 @@ print "	     			 '''------'---''---'-\""
 
 
 
-raw_input("...")
+time.sleep(.7)
 print "Sir. Ratsalot"
 
 print "	             (\,/)"
@@ -26,8 +72,7 @@ print "                         ',|  \    |__.'"
 print "                         '~  '~----''"
 
 
-raw_input("...")
-
+time.sleep(.7)
 print "Ratzo"
 
 print "                .---."
@@ -41,42 +86,1207 @@ character =""
 while len(character) == 0:
 	character = raw_input("Which character do you choose? \n > " )	
 
-	if character in ["Sir. Ratsalot" , "Ratzo" , "Elfred Ratskill"]:
-		print "Good choice %s is a great rat" % character
+	if character in ["Sir. Ratsalot" , "Ratzo" , "Elfred Ratskill", "sir. ratsalot", "ratzo", "elfred ratskill"]:
+		print "Good choice %s is a great rat." % character
 		break	
-	elif character not in ["Sir. Ratsalot" , "Ratzo" , "Elfred Ratskill"]:
+	else:
 		character = ""
 		print "You probably mistyped something, let's try entering the rat's name again"
 
 print "Let's begin our adventure!"
 raw_input("...")
-print "You awake in a small ratbed with a candle precariously burning beside the bed."
-print "The rest of the room is dark besides the sphere of light around you from the candle."
-print "You probably fell asleep reading"
-raw_input("...")
-print "Thank god you didn't burn the rathouse down."
 
-if character == "Ratzo":
-	print "...and suddenly a voice"
-	print "Hi Ratzo...Would you like the package you left me back?"
-	package = raw_input("(y/n) \n > ")
+
+##PACKAGE##
+#function for presenting and giving the package, leads to same room but either with or without contents
+#Also has loop including riddle to figure out who is giving the package
+def package(rat, round):
+	while rat == "Ratzo":
+		if round == 1:
+			print "...and suddenly a voice"
+			print "\"Hi Ratzo...Would you like the package you left me back?\""
+		elif round == 2:
+			print "\"So do you want the package or not?\""
+		else:
+			print "How did you get here?"
+			exit(1)
+				
+		package = str(raw_input("(y/n) \n > "))
+	
+		x = len(set(package.split()) &  set(["who", "are", "you"]))#splits user input into list of strings the
+		#compares intersection of the two lists. if non-zero can enter landlord
+		
 		if package == "y":
 			print "A package slides out of the darkness towards your bed"
-		
+			time.sleep(1)
+			bedroom("Ratzo","yes")
+			break
+	
 		elif package == "n":
-			print "\"Very well then, I'll keep it\", \n says the voice"
-			print "You get out of bed and begin wandering into the darkness"
-			print "You feel around the room helplessly and touch what feels like a door knob"
+			bedroom("Ratzo","no")
+		
+		elif x != 0 :
+			landlord()
+		
+		else:
+			print "%s not a proper answer" % package
+			round = 2
+
+#room where main story happens, should split up some of these nests into functions or something
+#all rats "enter" this room		
+def bedroom(rat, item):
+	print "You get up and step into the dark bedroom."
+	
+	if rat == "Ratzo" and item == "yes":
+		print "Package in hand, you look around the dark room for what to do next."
+		print "You deliberate a bit on what to do with the package, what could it be?"
+		time.sleep(1)
+		print "You wonder if you should even open it..."
+		open_package = raw_input("Open? (y/n)> ")
+		
+		if open_package == "n":
+			openpackage("no")
+		
+		elif open_package == "y":
+			openpackage("yes")
 			
-			raw_input("Should you: 1), Turn it \n 2) Look for a keyhole to peak through \n 3) wander some more")			 	
+		
+		else:
+			print "I don't understand"
+			bedroom("Ratzo","yes")
+
+	elif rat == "Ratzo" and item == "no":
+		print "ratzo no item reached" 
+	
+	else:
+		"else bedroom reached"
+	
 	
 
+			
+def openpackage(yesno): ##Automatically enters the yes open package if no input%%%%%%%%
+
+	if yesno == "no":	
+		print "You throw the package back onto the bed."
+		time.sleep(2)
+		print "HOLY SHIT"
+		time.sleep(2)
+		print "YOU KNOCKED OVER THE CANDLE"
+		time.sleep(1)
+		dead("fire")
+
+	elif yesno == "yes"	:
+		print "*nibble nibble tear tear*"
+		print "That's you opening the package with your face becasuse you're a rat."
+	
+		print "NICE, that's a nice package."
+		
+		todo = "nothing"
+		repeating = "no"
+		while todo == "nothing":
+			if repeating == "yes":
+				print "So, what's inside"		
+			else:
+				print "What do you think is inside?"
+			
+			inside = raw_input("> ")
+			
+			if "peanut" in list(inside.split()):
+				todo = "continue"
+			
+			else:
+				print "errr"
+				todo = "nothing"	
+				reapeating = "yes"
+							
+				print "Nope, I'll give you a hint" 
+				time.sleep(1)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                 :---8:    8 -- 8 -- 88     :8--:
+                 8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                 8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                       -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                       -8:    8:    :- 8   :8-    
+                         -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                       -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                 8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                 :---8:    8 -- 8 -- 88     :8--:
+                8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                 8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                       -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                       -8:    8:    :- 8   :8-    
+                         -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                       -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                 8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                 :---8:    8 -- 8 -- 88     :8--:
+                8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                 8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                       -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                       -8:    8:    :- 8   :8-    
+                         -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                       -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                 8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                 :---8:    8 -- 8 -- 88     :8--:
+                8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                 8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                       -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                       -8:    8:    :- 8   :8-    
+                         -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                       -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                 -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)				
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                  8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                 8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                  :---8:    8 -- 8 -- 88     :8--:
+                8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)
+				print """     
+                               :---:             
+                               8   8:
+                              8-    8:           
+                            ::8: ::::8           
+                           8 ** 8 ** 88          
+                 :---8:    8 -- 8 -- 88     :8--:
+                8    8     -8-- ----:8     8   8
+                -:::88      8:::::: -8     88::-
+                      -8:    8:    :- 8   :8-    
+                        -----8 ----  :8----      
+                             8       8         
+                             8      8-           
+                             8     :8            
+                             8888:88             
+                             8     8             
+                            8-     -8
+                         ::::8       8::          
+                       8-    -8    8-   -8        
+                        -------      ------        
+								"""
+				time.sleep( 0.201)												
+	#PBJ animation (should add ascii art text			
+				
+		print "Close enough!"
+		print "Peanut Butter and Oreos in the box, yo \n don't let that go to waste!"
+
+		print "What should you do with the delicious peanut butter and scrumptious oreos?"
+		eat = raw_input("> ")
+		
+		decision = "none"
+		while decision != "continue":
+			if "eat" and "peanut" in list(eat.split()): 
+				decision = "continue"
+				dead("poison")
+
+			elif "eat" and "oreos" in list(eat.split()):
+				print "Good choice, oreos are delicious all on their own."
+				print "You're all full of energy now. Guess you'll just save the peanut butter."
+				print "*scoops some peanut butter into pocket for later*"
+				decision = "continue"
+				bella("peanut")
+			elif "eat" and not "oreos" or "peanut" in list(eat.split()):
+				print "eat what? the box?"
+			else:
+				print "I don't know how to interpret \" %s \"" % eat	
+	else:
+		print "how did you get here: package function"
+			
+def bella(food):
+	if food == "peanut":
+		print "bella peanut reached"
+	else:
+		print "bella else reached"
+				
+		
+			
+
+		
+	
+#Landlord mostly useless, provides one extra escape in the end given this information	
+def landlord():	
+	print "\"I'm pretty sure I said (y/n) meaning choose \"yes\" \"no\" by typing y or n \""
+	time.sleep(2)
+	print "..."
+	time.sleep(0.5)
+	print "\"but if you must know I will tell you.\""
+	time.sleep(0.5)
+	print "\"but first tell me this\""
+	time.sleep(0.2)
+	
+	#beginning riddel  
+	answer = "none"
+	while answer == "none":
+		response = str(raw_input("\"How's a how to tell a who that it's the one to do a thing?\" \n >"))
+		
+		if len(list(set(["ask", "Ask"]) &  set(response.split()))) != 0:
+			answer = "ask"
+			print "\"Dang, that was too easy.\""
+			time.sleep(0.9)
+			print "\"I'm your damn landlord\""
+			time.sleep(0.7)
+			print " \"Please stop asking me to hold onto packages.\""
+			package("Ratzo", 2)
+		
+		else:
+			print "Try reading it again."
+
+
+#After receiving or not the package bedroom things happen (all rats use this room) all can enter with or without some item
+		
+#	print "You get out of bed and begin wandering into the darkness"
+#	time.sleep(1)
+#	print "You feel around the room helplessly and touch what feels like a door knob"
+
+#	raw_input("Should you: \n 1), Turn it \n 2) Look for a keyhole to peak through \n 3) wander some more")	
+			
+def no_pacakge():
+	print "\"Very well then, I'll keep it\", \n says the voice"
+	time.sleep(1)
+	bedroom("Ratzo", "no")
 
 
 
+while character == "ratzo" or "Ratzo":
+	
+	print "You awake in a small ratbed with a candle precariously burning beside the bed."
+	print "The rest of the room is dark besides the sphere of light around you from the candle."
+	print "You probably fell asleep reading"
+	raw_input("...")
+	print "Thank god you didn't burn the rathouse down."
+	
+	package("Ratzo",1)
 
-if character == "Sir. Ratsalot":
+while character == "Sir. Ratsalot":
 	print "Hey Sir Ratsalot...nice to see you again."
 	
-if character == "Elfred Ratskill":
+	
+while character == "Elfred Ratskill":
 	print "Hello Elfred"
